@@ -1,0 +1,71 @@
+{% extends "./base.html" %}
+{% block body %}
+<form action="{% url 'searchbar' %}" method="get">
+  <input type="text" name="search">
+  <button type="submit" >Buscar</button>
+</form>
+<table border=1px cellspacing=0 class="table table-striped"> <!--cellspacing obligatorio para separar tabla de forma correcta-->
+<tr>
+<th>ID</th>
+<th>Estado Proyectos</th>
+<th>Tipo de solución</th>
+<th>Año</th>
+</tr>
+  {% for book_1 in page_obj %}
+<tr>
+  {% if book_1.Estado_Ejecucion == 'Ejecutado'%}
+  <td>{{book_1.ID_SGI}}</td>
+  <td>{{book_1.Estado_Ejecucion}}</td>
+  <td>{{book_1.Tipo_Solucion}}</td>
+
+  {% endif %}
+
+{% endfor %}
+
+</tr>
+
+</table>
+<div class="col-4 offset-4">
+  <nav aria-label="...">
+    <ul class="pagination">
+
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+        </li>
+        <li>
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+            {{ page_obj.previous_page_number }}
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+      {% endif %}
+
+      <li class="page-item active">
+        <span class="page-link">{{ page_obj.number }}</span>
+      </li>
+
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+            {{ page_obj.next_page_number }}
+          </a>
+        </li>
+        <li class="page-item ">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
+        </li>
+      {% endif %}
+
+    </ul>
+  </nav>
+</div>
+
+
+{% endblock%}
