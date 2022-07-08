@@ -10,7 +10,10 @@
 <th>Estado Proyectos</th>
 <th>Tipo de solución</th>
 <th>Año</th>
+
+{% if user.is_authenticated and user.is_staff%}
 <th>Opcion</th>
+{% endif %}
 </tr>
   {% for book_1 in page_obj %}
 <tr>
@@ -20,8 +23,9 @@
   <td>{{book_1.Tipo_Solucion}}</td>
   <td>{{book_1.Year}}</td>
 
+  {% if user.is_authenticated and user.is_staff%}
   <td><a href="{% url 'editar_Capacidad' book_1.ID_SGI %}">EDIT</a> , <a href="{% url 'eliminar_Capacidad' book_1.ID_SGI %}">DELETE</a></td>
-
+  {% endif %}
 
   {% endif %}
 
@@ -74,7 +78,7 @@
 
 
 
-  <button type="submit" name="button"><a href="{% url 'crear_Capacidad' %}">Nuevo Proyecto</a></button>
+  {% if user.is_authenticated and user.is_staff%}<button type="submit" name="button"><a href="{% url 'crear_Capacidad' %}">Nuevo Proyecto</a></button>{% endif %}
 
 
 {% endblock%}
