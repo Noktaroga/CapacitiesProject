@@ -2,21 +2,26 @@
 {% block body %}
 <form action="{% url 'searchbar' %}" method="get">
   <input type="text" name="search">
-  <button type="submit" >Buscar</button>
-</form>
+  <button type="submit" >Buscar</button></form>
+
 <table border=1px cellspacing=0 class="table table-striped"> <!--cellspacing obligatorio para separar tabla de forma correcta-->
 <tr>
 <th>ID</th>
 <th>Estado Proyectos</th>
 <th>Tipo de solución</th>
 <th>Año</th>
+<th>Opcion</th>
 </tr>
   {% for book_1 in page_obj %}
 <tr>
-  {% if book_1.Estado_Ejecucion == 'Ejecutado'%}
+  {% if book_1.Estado_Ejecucion %}
   <td>{{book_1.ID_SGI}}</td>
   <td>{{book_1.Estado_Ejecucion}}</td>
   <td>{{book_1.Tipo_Solucion}}</td>
+  <td>{{book_1.Year}}</td>
+
+  <td><a href="{% url 'editar_Capacidad' book_1.ID_SGI %}">EDIT</a> , <a href="{% url 'eliminar_Capacidad' book_1.ID_SGI %}">DELETE</a></td>
+
 
   {% endif %}
 
@@ -25,6 +30,7 @@
 </tr>
 
 </table>
+{% if page_obj.has_other_pages %}
 <div class="col-4 offset-4">
   <nav aria-label="...">
     <ul class="pagination">
@@ -62,10 +68,13 @@
           <span class="page-link">Next</span>
         </li>
       {% endif %}
-
+{% endif %}
     </ul>
-  </nav>
-</div>
+  </nav></div>
+
+
+
+  <button type="submit" name="button"><a href="{% url 'crear_Capacidad' %}">Nuevo Proyecto</a></button>
 
 
 {% endblock%}

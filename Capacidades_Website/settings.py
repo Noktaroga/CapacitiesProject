@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Capacidades_App',
     'import_export',
-    'Capacidades_App.templatetags'
+    'Capacidades_App.templatetags',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+#Created for user profile
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'
+############################################
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

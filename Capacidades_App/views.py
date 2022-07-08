@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import capacidad
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from .forms import capacidadForm
 # Create your views here.
 
 def index(request):
@@ -14,11 +15,11 @@ def base(request):
     return render(request,'base.html')
 
 def dashboard(request):
-    book = capacidad.objects.all()
-    p = Paginator(book, 25)  # creating a paginator object
+    book = capacidad.objects.all().order_by('ID_SGI')
+    p = Paginator(book,per_page=15)  # creating a paginator object
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
-    context = {'book':book,'page_obj': page_obj}
+    context = {'page_obj': page_obj,'book':book}
     # sending the page object to index.html
     return render(request,'./dashboard.html', context)
 
@@ -31,7 +32,33 @@ def searchbar(request):
         # sending the page object to index.html
         return render(request,'./searchbar.html', context_2)
 
-
-
+def crearCapacidad(request):
+    if request.method == 'GET':
+        form = capacidadForm()
+        contexto = {'form':form}
+    else:
+        form = capacidadForm(request.POST)
+        contexto = {'form':form}
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    return render(request,'crear_Capacidad.html',contexto)
         #post = capacidad.objects.all().filter(ID_SGI__icontains=search)
         #return render(request,'./searchbar.html',{'post':post})
+def editarCapacidad(request, ID_SGI):
+    book = capacidad.objects.get(ID_SGI = ID_SGI)
+    if request.method == 'GET':
+        form = capacidadForm(instance = book)
+        contexto = {'form':form}
+    else:
+        form = capacidadForm(request.POST, instance=book)
+        contexto = {'form':form}
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    return render(request,'crear_Capacidad.html',contexto)
+
+def eliminarCapacidad(request,ID_SGI):
+    book = capacidad.objects.get(ID_SGI=ID_SGI)
+    book.delete()
+    return redirect('dashboard')

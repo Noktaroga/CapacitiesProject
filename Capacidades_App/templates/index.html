@@ -1,4 +1,13 @@
 {% extends "./base.html" %}
 {% block body %}
+{{user.username}} <!--Para ver el perfil activo -->
+
+{% if user.is_authenticated %}
+  <hr><a href="{% url 'logout' %}">Log Out</a>
+  <hr><a href="{% url 'profile' %}">Profile</a>
+{% else %}
+  <hr><a href="{% url 'register' %}">Registro</a>
+  <hr><a href="{% url 'login' %}">Log In</a>
+{% endif %}
 
 {% endblock%}
