@@ -69,15 +69,16 @@ def eliminarCapacidad(request,ID_SGI):
 
 def profile_upload(request):
     # declaring template
-    template = "profile_upload.html"
+    template = "upload.html"
     data = capacidad.objects.all()
     prompt = {
-        'order': 'Order of the CSV should be name, email, address,    phone, profile',
-        'profiles': data
+        'order': 'Order of the CSV should be: ID_SGI , Zona ...',
+        'capacidades': data
               }
     # GET request returns the value of the data with the specified key.
     if request.method == "GET":
         return render(request, template, prompt)
+
 
     csv_file = request.FILES['file']
     # let's check if it is a csv file
@@ -91,8 +92,7 @@ def profile_upload(request):
     next(io_string)
 
     for column in csv.reader(io_string, delimiter=','):
-        _, created = capacidad.objects.update_or_create(
-            Ano_Solicitud=column[0]
+        created = capacidad.objects.update_or_create(Ano_Solicitud=column[0]
             ,ID_SGI=column[1]
             ,Zona=column[2]
             ,HUB=column[3]
@@ -139,5 +139,5 @@ def profile_upload(request):
             ,Year_2022=column[44]
             ,
         )
-        context = {}
-        return render(request, template, context)
+    context = {}
+    return render(request, template, context)

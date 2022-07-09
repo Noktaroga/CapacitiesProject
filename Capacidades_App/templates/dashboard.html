@@ -25,9 +25,10 @@
   <td>{{book_1.Year}}</td>
 
   {% if user.is_authenticated and user.is_staff%}
-  <td><a href="{% url 'editar_Capacidad' book_1.ID_SGI %}">EDIT</a> , <a href="{% url 'eliminar_Capacidad' book_1.ID_SGI %}">DELETE</a></td>
+  <td><a href="{% url 'editar_Capacidad' book_1.ID_SGI %}">EDIT</a> , <a href="{% url 'eliminar_Capacidad' book_1.ID_SGI %}">DELETE</a></td> <!-- ID_SGI presentado como boton dentro de TD en tabla-->
+                                                          <!-- Al yo apretar el boton EDIT me esta redireccionando a la URL comando anterior-->
   {% endif %}
-  
+
   {% endif %}
 
 {% endfor %}
