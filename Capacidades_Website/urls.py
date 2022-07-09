@@ -20,14 +20,14 @@ from users import views as user_views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', include('Capacidades_App.urls')),
+    path('', include('Capacidades_App.urls')), #Para incluir las apps utilizadas en una App en especifico utilizamos este comando
+    
     path('admin/', admin.site.urls),
-    path('crear_Capacidad/',crearCapacidad,name='crear_Capacidad'),
-    path('editar_Capacidad/<int:ID_SGI>', editarCapacidad, name='editar_Capacidad'),
-    path('eliminar_Capacidad/<int:ID_SGI>', eliminarCapacidad, name='eliminar_Capacidad'),
     path('register/',user_views.register,name='register'),
     path('profile/',user_views.profile,name='profile'),
     path('login/',auth_views.LoginView.as_view(template_name='users/login.html'),name='login'),
     path('logout/',auth_views.LogoutView.as_view(template_name='users/logout.html'),name='logout'),
-
+    #path('editar_Capacidad/<int:ID_SGI>', editarCapacidad, name='editar_Capacidad'),
+    #path('crear_Capacidad/', crearCapacidad,name='crear_Capacidad'),
+    #path('eliminar_Capacidad/<int:ID_SGI>', eliminarCapacidad, name='eliminar_Capacidad'),
 ]
